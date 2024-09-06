@@ -20,6 +20,9 @@ struct Mode : std::enable_shared_from_this< Mode > {
 	//draw is called after update:
 	virtual void draw(glm::uvec2 const &drawable_size) = 0;
 
+	// return game status
+	virtual bool is_game_over() { return false; };
+
 	//Mode::current is the Mode to which events are dispatched.
 	// use 'set_current' to change the current Mode (e.g., to switch to a menu)
 	static std::shared_ptr< Mode > current;

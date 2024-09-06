@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
 
 	//create window:
 	SDL_Window *window = SDL_CreateWindow(
-		"gp23 game2: enter the matr... virtual world", //TODO: remember to set a title for your game!
+		"Swim! Dolphin", //TODO: remember to set a title for your game!
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		1280, 720, //TODO: modify window size if you'd like
 		SDL_WINDOW_OPENGL
@@ -162,7 +162,7 @@ int main(int argc, char **argv) {
 			if (!Mode::current) break;
 		}
 
-		{ //(2) call the current mode's "update" function to deal with elapsed time:
+		if(!Mode::current->is_game_over()) { //(2) call the current mode's "update" function to deal with elapsed time:
 			auto current_time = std::chrono::high_resolution_clock::now();
 			static auto previous_time = current_time;
 			float elapsed = std::chrono::duration< float >(current_time - previous_time).count();
