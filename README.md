@@ -7,9 +7,6 @@ Design: As a dolphin, you like swimming and you want to jump through as much buo
 Screen Shot:
 
 ![Screen Shot](screenshot.png)
-https://github.com/user-attachments/assets/39f136c5-b6eb-4910-94e9-3158f3ca3656
-
-
 
 How To Play:
 
