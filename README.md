@@ -2,7 +2,7 @@
 
 Author: Qiru Hu
 
-Design: As a dolphin, you like swimming and you want to jump through as much buoys as possible. The buoys will float towards you in three swimming lanes. You must swim in the correct lanes with buoys.
+Design: As a dolphin, you like swimming and you want to jump through as much buoys as possible. The buoys will move towards you in three swimming lanes at different height. You must swim in the correct lanes with buoys and jump to reach higher buoys.
 
 Screen Shot:
 
