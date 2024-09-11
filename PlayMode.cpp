@@ -215,16 +215,36 @@ void PlayMode::update_dolphin(float elapsed) {
 
 	// 	move dolphin
 	float dolphin_position_x = dolphin->position.x;
+	float dolphin_position_z = dolphin->position.z;
 	if (left.pressed && !right.pressed && pos_change_period >= POS_CHANGE_MIN_PERIOD) {
 		dolphin_position_x = std::max(-10.0f, dolphin_position_x - 10.0f);
 		pos_change_period = 0.0f;
 	} else if (!left.pressed && right.pressed && pos_change_period >= POS_CHANGE_MIN_PERIOD) {
 		dolphin_position_x = std::min(10.0f, dolphin_position_x + 10.0f);
 		pos_change_period = 0.0f;
-	} else {
+	} else if (up.pressed && dolphin_position_z < 10.0f) {
+		velocity += acceleration * elapsed;
+		velocity = std::min(velocity, MAX_VELOCITY);
+	} else if (!up.pressed && dolphin_position_z > 5.0f) {
+		velocity += gravity * elapsed;
+	}
+	// else if (!up.pressed && down.pressed && pos_change_period >= POS_CHANGE_MIN_PERIOD) {
+	// 	dolphin_position_z = std::max(0.0f, dolphin_position_z - 5.0f);
+	// 	std::cout<<dolphin_position_z<<std::endl;
+	// 	pos_change_period = 0.0f;
+	// } 
+	else {
 		pos_change_period += elapsed;
 	}
+
+	if(dolphin_position_z < 5.0f) {
+		velocity = 0.0f;
+	}
+	dolphin_position_z += velocity * elapsed;
+	dolphin_position_z = std::clamp(dolphin_position_z, 5.0f, 10.0f);
+
 	dolphin->position.x = dolphin_position_x;
+	dolphin->position.z = dolphin_position_z;
 }
 
 void PlayMode::update_torus(float elapsed) {
@@ -234,7 +254,7 @@ void PlayMode::update_torus(float elapsed) {
 		// show next torus in a random position
 		curr_torus_idx = (curr_torus_idx + 1) % 3;
 		if(!toruses[curr_torus_idx].is_showing) {
-			toruses[curr_torus_idx].show_at(get_next_torus_position());
+			toruses[curr_torus_idx].show();
 			set_next_show_torus_period();
 		}
 	}
@@ -242,14 +262,14 @@ void PlayMode::update_torus(float elapsed) {
 	for(auto &torus : toruses) {
 		if (torus.is_showing) {
 			torus.move(elapsed);
-			if(!is_jumping && torus.in_jump_range() && torus.transform->position.x == dolphin->position.x) {
+			if(!is_jumping && torus.in_jump_range()) {
 				// dolphin start jumping
 				std::cout<<"Dolphin jumps!"<<std::endl;
 				is_jumping = true;
 				torus.is_jumped_over = true;
 				++score;
 			}
-			if(!torus.is_jumped_over && torus.transform->position.y < torus.END_JUMP_POS) {
+			if(!torus.is_jumped_over && torus.transform->position.y < END_JUMP_POS) {
 				torus.is_jumped_over = true;
 				++missed;
 			}
@@ -277,5 +297,7 @@ void PlayMode::speed_up(float elapsed) {
 		SHOW_NEXT_TORUS_PERIOD_MAX = std::max(1.0f, SHOW_NEXT_TORUS_PERIOD_MAX);
 
 		jump_speed *= speed_up_factor;
+		acceleration *= speed_up_factor;
+		gravity *= speed_up_factor;
 	}
 }
