@@ -4,9 +4,12 @@ Author: Qiru Hu
 
 Design: As a dolphin, you like swimming and you want to jump through as much buoys as possible. The buoys will float towards you in three swimming lanes. You must swim in the correct lanes with buoys.
 
+
 Screen Shot:
 
 ![Screen Shot](screenshot.png)
+
+https://github.com/user-attachments/assets/4b2c6cf5-b6a8-4c1f-9a40-78755d52e6fa
 
 How To Play:
 - Press A to go to the left
