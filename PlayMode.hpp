@@ -120,7 +120,7 @@ struct PlayMode : Mode {
 	// plane:
 	Scene::Transform *plane = nullptr;
 	float PLANE_START_POS_X = 80.0f;
-	float PLANE_END_POS_X = -10.0f;
+	float PLANE_END_POS_X = 0.0f;
 	float plane_move_speed = 4.0f;
 	void update_plane(float elapsed);
 
